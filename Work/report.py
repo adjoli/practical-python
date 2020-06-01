@@ -36,9 +36,10 @@ def read_portfolio_dict(filename):
     portfolio = []
     with open(filename, 'rt') as f:
         rows = csv.reader(f)
-        next(rows)  # lê e ignora a primeira linha (cabeçalho)
+        header = next(rows)
         for row in rows:
-            portfolio.append({'name': row[0], 'shares': int(row[1]), 'price': float(row[2])})
+            linha = (row[0], int(row[1]), float(row[2]))
+            portfolio.append(dict(zip(header, linha)))
         return portfolio
 
 
@@ -53,12 +54,13 @@ def read_prices(filename):
                 pass
         return portfolio
 
+
 def make_report(file_portfolio, file_prices):
     prices = read_prices(file_prices)
     portfolio = read_portfolio_dict(file_portfolio)
 
     print(f"{'Name':>10s} {'Shares':>10s} {'Price':>10s} {'Change':>10s}")
-    print(('-'*10 + ' ') * 4)
+    print(('-' * 10 + ' ') * 4)
 
     for p in portfolio:
         change = prices[p['name']] - p['price']
