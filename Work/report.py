@@ -10,11 +10,15 @@ def portfolio_cost(filename):
     total_cost = 0.0
     with open(filename, 'rt') as f:
         rows = csv.reader(f)
-        next(rows)  # lê e ignora a primeira linha (cabeçalho)
-        for row in rows:
-            nshares = int(row[1])
-            price = float(row[2])
-            total_cost += nshares * price
+        header = next(rows)
+        for row_num, row in enumerate(rows, start=1):
+            try:
+                record = dict(zip(header, row))
+                nshares = int(record['shares'])
+                price = float(record['price'])
+                total_cost += nshares * price
+            except ValueError:
+                print(f"Row {row_num}: Bad row: {row}")
         return total_cost
 
 
@@ -69,3 +73,4 @@ def make_report(file_portfolio, file_prices):
 
 if __name__ == '__main__':
     make_report('Data/portfolio.csv', 'Data/prices.csv')
+
