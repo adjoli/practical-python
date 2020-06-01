@@ -4,7 +4,7 @@
 import csv
 
 
-def portfolio_cost(filename):
+def portfolio_cost(filename: str) -> float:
     """Compute de total cost (shares * price) of a portfolio price"""
 
     total_cost = 0.0
@@ -22,7 +22,7 @@ def portfolio_cost(filename):
         return total_cost
 
 
-def read_portfolio(filename):
+def read_portfolio(filename: str) -> list:
     """Return a list of tuples"""
 
     portfolio = []
@@ -34,7 +34,7 @@ def read_portfolio(filename):
         return portfolio
 
 
-def read_portfolio_dict(filename):
+def read_portfolio_dict(filename: str) -> list:
     """Return a list of dictionaries"""
 
     portfolio = []
@@ -49,7 +49,13 @@ def read_portfolio_dict(filename):
         return portfolio
 
 
-def read_prices(filename):
+def read_prices(filename: str) -> dict:
+    """
+    Read prices from a CSV file of name,price data
+
+    :param filename:
+    :return: dict
+    """
     portfolio = {}
     with open(filename, 'rt') as f:
         rows = csv.reader(f)
@@ -61,7 +67,7 @@ def read_prices(filename):
         return portfolio
 
 
-def make_report(file_portfolio, file_prices):
+def make_report(file_portfolio: str, file_prices: str) -> None:
     prices = read_prices(file_prices)
     portfolio = read_portfolio_dict(file_portfolio)
 
