@@ -4,7 +4,7 @@
 import csv
 
 
-def parse_csv(filename: str, select=None) -> list:
+def parse_csv(filename: str, select=None, types=None) -> list:
     """
     Parse a CSV file in a list of records.
 
@@ -14,7 +14,6 @@ def parse_csv(filename: str, select=None) -> list:
     with open(filename) as f:
         rows = csv.reader(f)
 
-        # Read de file headers
         headers = next(rows)
 
         if select:
@@ -29,9 +28,16 @@ def parse_csv(filename: str, select=None) -> list:
                 continue
 
             if indices:
-                row = [row[index] for index in indices]
+                if types:
+                    row = [func(row[index]) for func, index in zip(types, indices)]
+                else:
+                    row = [row[index] for index in indices]
 
             record = dict(zip(headers, row))
             records.append(record)
 
         return records
+
+
+if __name__ == '__main__':
+    print(parse_csv('Data/portfolio.csv', select='name price'.split(), types=[str, float]))
