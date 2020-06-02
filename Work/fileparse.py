@@ -4,17 +4,19 @@
 import csv
 
 
-def parse_csv(filename: str, select=None, types=None, has_header=False) -> list:
+def parse_csv(filename: str, select=None, types=None, has_header=False, delimiter=None) -> list:
     """
     Parse a CSV file in a list of records.
 
     :param filename:
     :param select: A list of fields to filter
     :param types: A list of types to typecasting
+    :param has_header: A flag to inform if data has headers
+    :param delimiter:
     :return:
     """
     with open(filename) as f:
-        rows = csv.reader(f)
+        rows = csv.reader(f, delimiter=delimiter) if delimiter else csv.reader(f)
 
         records = []
 
@@ -48,4 +50,5 @@ def parse_csv(filename: str, select=None, types=None, has_header=False) -> list:
 if __name__ == '__main__':
     #print(parse_csv(filename='Data/portfolio.csv', has_header=True))
     #print(parse_csv(filename='Data/portfolio.csv', select='name shares'.split(), types=[str, int], has_header=True))
-    print(parse_csv(filename='Data/prices.csv'))
+    #print(parse_csv(filename='Data/prices.csv'))
+    print(parse_csv(filename='Data/portfolio.dat', has_header=True, delimiter=' '))
