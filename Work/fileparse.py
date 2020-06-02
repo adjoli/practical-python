@@ -15,6 +15,12 @@ def parse_csv(filename: str, select=None, types=None, has_header=False, delimite
     :param delimiter:
     :return:
     """
+
+    # Raise an exception if 'select' has been passed, but data has no headers (has_header is False)
+    if select and not has_header:
+        raise RuntimeError("'select' argument requires column headers")
+
+
     with open(filename) as f:
         rows = csv.reader(f, delimiter=delimiter) if delimiter else csv.reader(f)
 
@@ -47,8 +53,8 @@ def parse_csv(filename: str, select=None, types=None, has_header=False, delimite
         return records
 
 
-if __name__ == '__main__':
+#if __name__ == '__main__':
     #print(parse_csv(filename='Data/portfolio.csv', has_header=True))
     #print(parse_csv(filename='Data/portfolio.csv', select='name shares'.split(), types=[str, int], has_header=True))
     #print(parse_csv(filename='Data/prices.csv'))
-    print(parse_csv(filename='Data/portfolio.dat', has_header=True, delimiter=' '))
+    #print(parse_csv(filename='Data/portfolio.dat', delimiter=' ', select='name'.split()))
