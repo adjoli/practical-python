@@ -4,7 +4,7 @@
 import csv
 
 
-def parse_csv(filename: str) -> list:
+def parse_csv(filename: str, selected_cols=[]) -> list:
     """
     Parse a CSV file in a list of records.
 
@@ -16,10 +16,25 @@ def parse_csv(filename: str) -> list:
 
         # Read de file headers
         headers = next(rows)
+
+        # Check if selected_cols are in headers
+        sel_cols = []
+        if selected_cols:
+            sel_cols = [c for c in selected_cols if c in headers]
+
         records = []
         for row in rows:
             if not row:
                 continue
+
             record = dict(zip(headers, row))
+
+            if sel_cols:
+                my_record = {}
+                for col in sel_cols:
+                    my_record[col] = record[col]
+                record = my_record
+
             records.append(record)
+
         return records
