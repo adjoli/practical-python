@@ -51,10 +51,3 @@ def parse_csv(filename: str, select=None, types=None, has_header=False, delimite
             records.append(record)
 
         return records
-
-
-#if __name__ == '__main__':
-    #print(parse_csv(filename='Data/portfolio.csv', has_header=True))
-    #print(parse_csv(filename='Data/portfolio.csv', select='name shares'.split(), types=[str, int], has_header=True))
-    #print(parse_csv(filename='Data/prices.csv'))
-    #print(parse_csv(filename='Data/portfolio.dat', delimiter=' ', select='name'.split()))
