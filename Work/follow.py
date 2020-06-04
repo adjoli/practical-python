@@ -1,7 +1,7 @@
 import os
 import time
 
-print(os.getcwd())
+#print(os.getcwd())
 
 def follow(filename):
     f = open(filename, 'r')
@@ -17,9 +17,9 @@ def follow(filename):
 if __name__ == '__main__':
     import report
 
-    portfolio = report.read_portfolio('portfolio.csv')
+    portfolio = report.read_portfolio('Data/portfolio.csv')
 
-    for line in follow('stocklog.csv'):
+    for line in follow('Data/stocklog.csv'):
         fields = line.split(',')
         name = fields[0].strip('"')
         price = float(fields[1])
