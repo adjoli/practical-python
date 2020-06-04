@@ -178,6 +178,3 @@ m.register(BasicPrinter())
 m.register(LogPrinter("stocklog.csv"))
 
 m.run(1)
-
-
-   

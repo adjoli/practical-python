@@ -1,10 +1,31 @@
 class Stock:
+    #__slots__ = ('name', 'shares', 'price')  # Restrict attributes
     def __init__(self, name, shares, price):
         self.name = name
         self.shares = shares
         self.price = price
-        # TODO: Implementar decorator 'property'
 
+    @property
+    def shares(self):
+        return self._shares
+
+    @shares.setter
+    def shares(self, value):
+        if not isinstance(value, int):
+            raise TypeError('Expected int')
+        self._shares = value
+
+    @property
+    def price(self):
+        return self._price
+
+    @price.setter
+    def price(self, value):
+        if not isinstance(value, float):
+            raise TypeError('Expected float')
+        self._price = value
+
+    @property
     def cost(self):
         return self.shares * self.price
 
@@ -13,7 +34,7 @@ class Stock:
         # TODO: Implementar logica para evitar self.shares < 0
 
     def __repr__(self):
-        return f"{self.name:>6s} {self.shares:>6d} {self.price:>6.2f}"
+        return f"Stock({self.name}, {self.shares}, {self.price})"
 
 
 def main():
@@ -23,7 +44,9 @@ def main():
 
         portfolio = [Stock(s['name'], s['shares'], s['price']) for s in portdicts]
 
-        print(sum(s.cost() for s in portfolio))
+        print(portfolio)
+
+        print(sum(s.cost for s in portfolio))
 
 if __name__ == '__main__':
     main()

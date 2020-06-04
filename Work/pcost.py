@@ -2,13 +2,12 @@
 
 import report
 import stock
+from portfolio import Portfolio
 
 def portfolio_cost(filename):
-    '''
-    Computes the total cost (shares*price) of a portfolio file
-    '''
+    ''' Computes the total cost (shares*price) of a portfolio file '''
     portfolio = report.read_portfolio(filename)
-    return sum([s.cost() for s in portfolio])
+    return portfolio.total_cost
 
 def main(args):
     if len(args) != 2:
