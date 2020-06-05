@@ -6,14 +6,15 @@ from stock import Stock
 from portfolio import Portfolio
 
 
-def read_portfolio(filename):
+def read_portfolio(filename, **opts):
     """Read a stock portfolio from file and returns a Portfolio() object."""
 
     with open(filename) as lines:
-        portdicts = fileparse.parse_csv(lines, select=['name', 'shares', 'price'], types=[str, int, float])
+        portdicts = fileparse.parse_csv(lines, select=['name', 'shares', 'price'], types=[str, int, float], **opts)
 
-    portfolio = [Stock(d['name'], d['shares'], d['price']) for d in portdicts]
+    portfolio = [Stock(**d) for d in portdicts]
     return Portfolio(portfolio)
+
 
 def read_prices(filename):
     """Read a CSV file of price data into a dict mapping names to prices."""
@@ -59,7 +60,7 @@ def portfolio_report(portfoliofile, pricefile, fmt='txt'):
 
 def main(args):
     if len(args) != 4:
-        raise SystemExit('Usage: %s portfile pricefile format' % args[0])
+        raise SystemExit('==> Usage: %s <portfile> <pricefile> <format>' % args[0])
     portfolio_report(args[1], args[2], args[3])
 
 
