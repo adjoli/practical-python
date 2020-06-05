@@ -1,31 +1,23 @@
 # report.py
 
-import fileparse
 import tableformat
-from stock import Stock
+import fileparse
 from portfolio import Portfolio
 
 
 def read_portfolio(filename, **opts):
-    """Read a stock portfolio from file and returns a Portfolio() object."""
-
     with open(filename) as lines:
-        portdicts = fileparse.parse_csv(lines, select=['name', 'shares', 'price'], types=[str, int, float], **opts)
+        portfolio = Portfolio.from_csv(lines)
 
-    portfolio = [Stock(**d) for d in portdicts]
-    return Portfolio(portfolio)
+    return portfolio
 
 
 def read_prices(filename):
-    """Read a CSV file of price data into a dict mapping names to prices."""
-
     with open(filename) as lines:
         return dict(fileparse.parse_csv(lines, types=[str, float], has_headers=False))
 
 
 def make_report_data(portfolio, prices):
-    """ Make a list of (name, shares, price, change) tuples given a portfolio list and prices dictionary. """
-
     rows = []
     for stock in portfolio:
         current_price = prices[stock.name]
@@ -36,8 +28,6 @@ def make_report_data(portfolio, prices):
 
 
 def print_report(reportdata, formatter):
-    """ Print a nicely formated table from a list of (name, shares, price, change) tuples. """
-
     formatter.headings(['Name', 'Shares', 'Price', 'Change'])
     for name, shares, price, change in reportdata:
         rowdata = [name, str(shares), f"{price:0.2f}", f"{change:0.2f}"]
@@ -45,7 +35,6 @@ def print_report(reportdata, formatter):
 
 
 def portfolio_report(portfoliofile, pricefile, fmt='txt'):
-    """ Make a stock report given portfolio and price data files. """
     # Read data files
     portfolio = read_portfolio(portfoliofile)
     prices = read_prices(pricefile)
