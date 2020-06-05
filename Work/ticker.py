@@ -15,8 +15,7 @@ def convert_types(rows, types):
 
 
 def make_dicts(rows, headers):
-    for row in rows:
-        yield dict(zip(headers, row))
+    return (dict(zip(headers, row)) for row in rows)
 
 
 def parse_stock_data(lines):
@@ -27,16 +26,11 @@ def parse_stock_data(lines):
     return rows
 
 
-def filter_symbols(rows, names):
-    for row in rows:
-        if row['name'] in names:
-            yield row
-
 def ticker(portfile, logfile, fmt):
-    portf = report.read_portfolio(portfile)
+    portfolio = report.read_portfolio(portfile)
     lines = follow(logfile)
-    rows = parse_stock_data(follow('Data/stocklog.csv'))
-    rows = filter_symbols(rows, portf)
+    rows = parse_stock_data(lines)
+    rows = (row for row in rows if row['name'] in portfolio)    # substitute filter_symbols()
     formatter = tableformat.create_formatter(fmt)
     formatter.headings('Name Price Change'.split())
     for row in rows:
