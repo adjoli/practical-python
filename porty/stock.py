@@ -1,4 +1,4 @@
-from typedproperty import typedproperty, String, Integer, Float
+from .typedproperty import typedproperty, String, Integer, Float
 
 class Stock:
     name = String('name')

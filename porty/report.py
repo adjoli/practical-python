@@ -1,14 +1,13 @@
 # report.py
 
-import tableformat
-import fileparse
-from portfolio import Portfolio
+from . import tableformat
+from . import fileparse
+from .portfolio import Portfolio
 
 
 def read_portfolio(filename, **opts):
     with open(filename) as lines:
         portfolio = Portfolio.from_csv(lines)
-
     return portfolio
 
 

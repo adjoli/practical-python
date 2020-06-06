@@ -19,7 +19,7 @@ if __name__ == '__main__':
 
     portfolio = report.read_portfolio('Data/portfolio.csv')
 
-    for line in follow('Data/stocklog.csv'):
+    for line in follow('../Work/Data/stocklog.csv'):
         fields = line.split(',')
         name = fields[0].strip('"')
         price = float(fields[1])

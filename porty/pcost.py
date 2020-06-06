@@ -1,8 +1,8 @@
 # pcost.py
 
-import report
-import stock
-from portfolio import Portfolio
+from . import report
+from . import stock
+from .portfolio import Portfolio
 
 def portfolio_cost(filename):
     ''' Computes the total cost (shares*price) of a portfolio file '''
